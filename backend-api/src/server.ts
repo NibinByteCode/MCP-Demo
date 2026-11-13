@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { generateText } from "ai";
-import { getLLMModel } from "./llm.js";
+import { getLLMModel } from "./llm";
 
 dotenv.config();
 
