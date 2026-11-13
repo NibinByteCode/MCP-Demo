@@ -38,24 +38,40 @@ export class App {
     const text = this.inputMessage.trim();
     if (!text || this.loading()) return;
 
+    // 1. Add current user message to local state first
     this.messages.update((msgs) => [...msgs, { sender: 'user', text }]);
     this.inputMessage = '';
     this.loading.set(true);
 
-    this.http.post<any>(`${environment.apiUrl}/api/chat`, { message: text }).subscribe({
-      next: (res) => {
-        this.messages.update((msgs) => [...msgs, { sender: 'assistant', text: res.response }]);
-        this.loading.set(false);
-        this.playSound();
-      },
-      error: () => {
-        this.messages.update((msgs) => [
-          ...msgs,
-          { sender: 'assistant', text: 'Error communicating with the backend API.' },
-        ]);
-        this.loading.set(false);
-        this.playSound();
-      },
-    });
+    // 2. Prepare the sliding window history (last 2 messages before the current one, if any)
+    const currentMessages = this.messages();
+    // Get prior messages (excluding the one we just added)
+    const priorMessages = currentMessages.slice(0, -1);
+    const recentHistory = priorMessages.slice(-2).map((m) => ({
+      role: m.sender === 'user' ? 'user' : 'assistant',
+      content: m.text,
+    }));
+
+    // 3. Send both the current message AND the recent history payload to match backend expectations
+    this.http
+      .post<any>(`${environment.apiUrl}/api/chat`, {
+        message: text,
+        messages: recentHistory,
+      })
+      .subscribe({
+        next: (res) => {
+          this.messages.update((msgs) => [...msgs, { sender: 'assistant', text: res.response }]);
+          this.loading.set(false);
+          this.playSound();
+        },
+        error: () => {
+          this.messages.update((msgs) => [
+            ...msgs,
+            { sender: 'assistant', text: 'Error communicating with the backend API.' },
+          ]);
+          this.loading.set(false);
+          this.playSound();
+        },
+      });
   }
 }
