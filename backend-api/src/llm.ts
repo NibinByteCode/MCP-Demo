@@ -1,17 +1,27 @@
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenAI } from "@ai-sdk/openai";
+import { createAnthropic } from "@ai-sdk/anthropic";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-export function getLLMModel() {
-  const provider = process.env.LLM_PROVIDER || "ollama";
+export function getLLMModel(): any {
+  const provider = (process.env.LLM_PROVIDER || "ollama").toLowerCase();
+
+  if (provider === "openrouter") {
+    const openrouter = createOpenAI({
+      baseURL: process.env.OPENROUTER_BASE_URL || "https://openrouter.ai/api/v1",
+      apiKey: process.env.OPENROUTER_API_KEY,
+      compatibility: "compatible", // third-party OpenAI-style API
+    });
+    return openrouter(process.env.OPENROUTER_MODEL || "openrouter/free");
+  }
 
   if (provider === "gemini") {
     const google = createGoogleGenerativeAI({
       apiKey: process.env.GEMINI_API_KEY,
     });
-    return google(process.env.GEMINI_MODEL || "gemini-2.5-flash");
+    return google(process.env.GEMINI_MODEL || "gemini-1.5-flash");
   }
 
   if (provider === "openai") {
@@ -27,6 +37,13 @@ export function getLLMModel() {
       apiKey: process.env.AZURE_OPENAI_API_KEY,
     });
     return azure(process.env.AZURE_OPENAI_DEPLOYMENT_NAME || "gpt-4o");
+  }
+
+  if (provider === "anthropic") {
+    const anthropic = createAnthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY,
+    });
+    return anthropic(process.env.ANTHROPIC_MODEL || "claude-3-5-sonnet-latest");
   }
 
   // Default to local Ollama (OpenAI-compatible endpoint)
