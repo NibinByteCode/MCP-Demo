@@ -6,25 +6,19 @@
 
   <div class="messages-box">
     @for (msg of messages(); track $index) {
-      <div [class]="'message ' + msg.sender">
-        <div class="bubble">
-          <strong>{{ msg.sender === 'user' ? 'You' : 'ERP Assistant' }}</strong>
-          <p>{{ msg.text }}</p>
-          @if (msg.query) {
-            <pre class="sql-badge"><code>SQL: {{ msg.query }}</code></pre>
-          }
-        </div>
+    <div [class]="'message ' + msg.sender">
+      <div class="bubble">
+        <strong>{{ msg.sender === 'user' ? 'You' : 'ERP Assistant' }}</strong>
+        <!-- Render markdown content as HTML -->
+        <div class="markdown-content" [innerHTML]="msg.text | markdown"></div>
       </div>
+    </div>
     }
   </div>
 
   <div class="input-box">
-    <input 
-      [(ngModel)]="inputMessage" 
-      (keyup.enter)="sendMessage()" 
-      placeholder="Ask about contracts, customers, visits..." 
-      [disabled]="loading()"
-    />
+    <input [(ngModel)]="inputMessage" (keyup.enter)="sendMessage()"
+      placeholder="Ask about contracts, customers, visits..." [disabled]="loading()" />
     <button (click)="sendMessage()" [disabled]="loading()">
       {{ loading() ? 'Thinking...' : 'Send' }}
     </button>

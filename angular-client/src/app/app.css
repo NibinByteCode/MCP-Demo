@@ -7,7 +7,7 @@
   height: 85vh;
   border: 1px solid #e1e4e8;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   background: #ffffff;
 }
 
@@ -63,7 +63,7 @@
   max-width: 75%;
   padding: 14px 18px;
   border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .user .bubble {
@@ -124,7 +124,7 @@
 
 .input-box input:focus {
   border-color: #0366d6;
-  box-shadow: 0 0 0 3px rgba(3,102,214,0.1);
+  box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.1);
 }
 
 .input-box button {
@@ -144,4 +144,45 @@
 .input-box button:disabled {
   background: #94d3a2;
   cursor: not-allowed;
+}
+::ng-deep .markdown-content {
+  width: 100%;
+  overflow-x: auto;
+}
+
+::ng-deep .markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 0.85rem;
+  background-color: #ffffff;
+  color: #333333;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  table-layout: auto;
+}
+
+::ng-deep .markdown-content th,
+::ng-deep .markdown-content td {
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1 !important; /* Forces the border to render */
+  text-align: left;
+  vertical-align: top;
+  word-break: break-word;
+}
+
+::ng-deep .markdown-content th {
+  background-color: #f1f5f9;
+  font-weight: 600;
+  color: #1e293b;
+  white-space: nowrap;
+}
+
+::ng-deep .markdown-content tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+::ng-deep .markdown-content tr:hover {
+  background-color: #f1f5f9;
 }
