@@ -1,0 +1,147 @@
+.chat-container {
+  max-width: 800px;
+  margin: 40px auto;
+  font-family: system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 85vh;
+  border: 1px solid #e1e4e8;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  background: #ffffff;
+}
+
+.chat-header {
+  padding: 20px;
+  border-bottom: 1px solid #e1e4e8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f6f8fa;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.chat-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #24292e;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  background: #28a745;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.messages-box {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: #fafbfc;
+}
+
+.message {
+  display: flex;
+  width: 100%;
+}
+
+.message.user {
+  justify-content: flex-end;
+}
+
+.message.assistant {
+  justify-content: flex-start;
+}
+
+.bubble {
+  max-width: 75%;
+  padding: 14px 18px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.user .bubble {
+  background: #0366d6;
+  color: white;
+  border-bottom-right-radius: 2px;
+}
+
+.assistant .bubble {
+  background: #ffffff;
+  color: #24292e;
+  border: 1px solid #e1e4e8;
+  border-bottom-left-radius: 2px;
+}
+
+.bubble strong {
+  display: block;
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+  opacity: 0.8;
+}
+
+.bubble p {
+  margin: 0;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.sql-badge {
+  margin-top: 10px;
+  padding: 8px;
+  background: #f1f8ff;
+  border: 1px solid #c8e1ff;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: #005cc5;
+  overflow-x: auto;
+}
+
+.input-box {
+  padding: 20px;
+  border-top: 1px solid #e1e4e8;
+  display: flex;
+  gap: 12px;
+  background: #ffffff;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.input-box input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #d1d5da;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.input-box input:focus {
+  border-color: #0366d6;
+  box-shadow: 0 0 0 3px rgba(3,102,214,0.1);
+}
+
+.input-box button {
+  padding: 12px 24px;
+  background: #2ea44f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.input-box button:hover {
+  background: #2c974b;
+}
+
+.input-box button:disabled {
+  background: #94d3a2;
+  cursor: not-allowed;
+}

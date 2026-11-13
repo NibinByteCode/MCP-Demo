@@ -1,0 +1,32 @@
+<div class="chat-container">
+  <header class="chat-header">
+    <h2>PestControl ERP Assistant</h2>
+    <span class="status-dot"></span>
+  </header>
+
+  <div class="messages-box">
+    @for (msg of messages(); track $index) {
+      <div [class]="'message ' + msg.sender">
+        <div class="bubble">
+          <strong>{{ msg.sender === 'user' ? 'You' : 'ERP Assistant' }}</strong>
+          <p>{{ msg.text }}</p>
+          @if (msg.query) {
+            <pre class="sql-badge"><code>SQL: {{ msg.query }}</code></pre>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="input-box">
+    <input 
+      [(ngModel)]="inputMessage" 
+      (keyup.enter)="sendMessage()" 
+      placeholder="Ask about contracts, customers, visits..." 
+      [disabled]="loading()"
+    />
+    <button (click)="sendMessage()" [disabled]="loading()">
+      {{ loading() ? 'Thinking...' : 'Send' }}
+    </button>
+  </div>
+</div>
